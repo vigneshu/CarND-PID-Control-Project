@@ -3,6 +3,29 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+
+### Effects of P, I and D
+
+The PID controller consists of an P- a D- and an I- part.
+
+* Term P is proportional to the current value of the error (in our case the cross track).  
+
+* Term D  is proportional to the derivative  of the system. It counterparts the P-component's tendency to oscillates and addresses the overshoot problem. When the error is  high but the car is  already  in the direction of minimizing the error, the D part prevents the system from overshooting.
+
+* Term I accounts for the integrated cross track error over time. This component lessens the system biases of steering and also helpful when the car travels at high speeds and reduces oscillations
+
+Comments
+
+* It is possible to just pass with a P controller and a low velocity (throttle) value.
+* The D part helps preventing oscillating to much and the velocity can be increased.
+* The I part in this specific project did not make to much sense because P and D had already enough to do. You can imagine driving on a straight road with constant bending, in this scenario the I part would be perfect to reach stationary accuracy.
+
+#### Tuning
+I implemented twiddle as mentioned in the course videos to get an initial guess of PID values. The twiddle is implemented in PID.cpp line 45. The twiddle function is called in main. See lines 76 to 89 in main.cpp. I commented this code out after twiddling values. This basically restartst the simulator over and over aand calculates the best error. 
+
+I then tuned P and D with various values around the seed value from twiddle by changing it in step sizes of 0.005.
+
+
 ## Dependencies
 
 * cmake >= 3.5
