@@ -34,11 +34,23 @@ int main()
 
   PID pid;
   // TODO: Initialize the pid variable.
-
+  // pid.Init(-0.07, 0, -0.8);
+  // pid.Init(-0.091, -0.0005, -0.8);
+  // pid.Init(-0.1189 ,-0.0000, -0.863);
+  // pid.Init(-0.09 ,-0.0000, -0.863);
+  pid.Init(-0.15 ,-0.0000, -0.95);
+  // pid.Init(0.15, 0.0005, 0.45);
+  
+  // pid.Init(0.35, 0.01, 0.004);
+  int twiddling = 1;
+  
+  // pid.Init(init_Kp, init_Ki, init_Kd);
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
+    static unsigned int timesteps = 0;
+    double total_error = 0.0;    
     if (length && length > 2 && data[0] == '4' && data[1] == '2')
     {
       auto s = hasData(std::string(data).substr(0, length));
@@ -57,9 +69,26 @@ int main()
           * NOTE: Feel free to play around with the throttle and speed. Maybe use
           * another PID controller to control the speed!
           */
-          
+ 
+          pid.UpdateError(cte);
+          steer_value = pid.TotalError();
+
+          // if (0) {
+          //   if (timesteps > 500) {
+          //     std::cout<<"test inside";
+          //     pid.Twiddle(total_error, pid.Kp);
+          //     pid.Restart(ws);
+          //     timesteps = 0;
+          //     total_error = 0.0;
+          //     return;
+          //   } else {
+          //     total_error += pow(cte, 2);
+          //   }
+          //   timesteps++;
+          // }          
+          //end         
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          // std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
