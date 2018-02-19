@@ -16,7 +16,7 @@ The PID controller consists of an P- a D- and an I- part.
 
 
 #### Tuning
-I implemented twiddle as mentioned in the course videos to get an initial guess of PID values. The twiddle is implemented in PID.cpp line 45. The twiddle function is called in main. See lines 76 to 89 in main.cpp. I commented this code out after twiddling values. This basically restartst the simulator over and over aand calculates the best error. 
+I implemented twiddle as mentioned in the course videos to get an initial guess of PID values. The twiddle is implemented in PID.cpp line 45. The twiddle function is called in main. See lines 76 to 89 in main.cpp. I commented this code out after twiddling values. This basically restarts the simulator over and over and calculates the best error. 
 
 I then tuned P and D with various values around the seed value from twiddle by changing it in step sizes of 0.005.
 
